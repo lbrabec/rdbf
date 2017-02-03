@@ -121,8 +121,8 @@ refresh: function(accumulator = [], url = 'http://taskotron.fedoraproject.org/re
       <div className="text-center">
         <Results results={this.state.results} />
         <br />
-        <button type="button" className="btn btn-default" onClick={this.loadMoreWrapper}>
-          +
+        <button type="button" className="btn btn-default more" onClick={this.loadMoreWrapper}>
+          <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
         </button>
       </div>
     )
@@ -133,20 +133,14 @@ var Results = React.createClass({
   render: function(){
     var listResults = this.props.results.map(function(result){
       return (
-          <ResultInfo result={result} key={result.id}/>
-          )
+        <ResultInfo result={result} key={result.id}/>
+      )
     });
 
     var listResultsDetails = this.props.results.map(function(result){
       return (
-          <tr className="collapse" id={"collapse"+result.id}>
-          <td colSpan="5">
-            <pre className="text-left">
-              {JSON.stringify(result, null, ' ')}
-            </pre>
-          </td>
-          </tr>
-        )
+        <ResultDetail result={result} key={"detail"+result.id} />
+      )
     });
 
     var empty = (<tr></tr>);
@@ -183,8 +177,14 @@ var ResultInfo = React.createClass({
     var icon = function(outcome){
       if (outcome == "PASSED") {
         return (<i className="fa fa-check-circle fa-fw" aria-hidden="true"></i>)
-      } else {
+      } else
+      if (outcome == "FAILED"){
         return (<i className="fa fa-times-circle fa-fw" aria-hidden="true"></i>)
+      } else
+      if (outcome == "NEEDS_INSPECTION"){
+        return (<i className="fa fa-question-circle fa-fw" aria-hidden="true"></i>)
+      } else { //INFO
+        return (<i className="fa fa-info-circle fa-fw" aria-hidden="true"></i>)
       }
     }(this.props.result.outcome);
     return (
@@ -204,7 +204,17 @@ var ResultInfo = React.createClass({
 
 var ResultDetail = React.createClass({
   render: function(){
-
+    return (
+        <tr>
+          <td colSpan="5">
+            <div className="collapse" id={"collapse"+this.props.result.id}>
+              <pre className="text-left">
+                {JSON.stringify(this.props.result, null, ' ')}
+              </pre>
+            </div>
+          </td>
+        </tr>
+      )
   }
 });
 
