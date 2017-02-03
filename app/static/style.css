@@ -1,0 +1,79 @@
+@font-face {
+  font-family: "Overpass";
+  src: local("Overpass Regular"),
+        local(Overpass),
+        local(Overpass-Regular),
+        url(fonts/Overpass-Regular.ttf);
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Overpass";
+  src: local("Overpass Bold"),
+        local(Overpass-Bold),
+        local(Overpass-Bold),
+        url(fonts/Overpass-Bold.ttf);
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Overpass";
+  src: local("Overpass Light"),
+        local(Overpass-Light),
+        url(fonts/Overpass-Light.ttf);
+  font-style: normal;
+  font-weight: 300;
+}
+
+body {
+  font-family: "Overpass";
+  background-color: #fefefe;
+  !font-size: 16pt
+}
+
+.navbar {
+  margin-bottom: 0px;
+  border: none;
+  background: none;
+}
+
+.navbar-dark {
+  background-color: #535452;
+}
+
+.navbar-brand {
+  color: #e8e8e8 !important;
+  text-transform: uppercase;
+  font-size: 10pt;
+}
+.navbar-nav > li > a {
+  text-transform: uppercase;
+  color: #e8e8e8 !important;
+  font-size: 10pt;
+}
+
+.navbar-nav > li > a:hover {
+  color: #639a81 !important;
+}
+
+.vfill-40 {
+  margin: 0px;
+  padding: 0px;
+  !height: 40px;
+  height: 4vh;
+}
+
+.vfill-80 {
+  margin: 0px;
+  padding: 0px;
+  height: 80px;
+}
+
+.vfill-120 {
+  margin: 0px;
+  padding: 0px;
+  !height: 120px;
+  height: 12vh;
+}
