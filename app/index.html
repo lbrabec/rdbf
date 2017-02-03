@@ -23,6 +23,35 @@
     <![endif]-->
 
     <style>
+    @font-face {
+    font-family: "Overpass";
+    src: local("Overpass Regular"),
+          local(Overpass),
+          local(Overpass-Regular),
+          url(static/fonts/Overpass-Regular.ttf);
+    font-style: normal;
+    font-weight: 400;
+    }
+
+    @font-face {
+    font-family: "Overpass";
+    src: local("Overpass Bold"),
+          local(Overpass-Bold),
+          local(Overpass-Bold),
+          url(static/fonts/Overpass-Bold.ttf);
+    font-style: normal;
+    font-weight: 700;
+    }
+
+    @font-face {
+    font-family: "Overpass";
+    src: local("Overpass Light"),
+          local(Overpass-Light),
+          url(static/fonts/Overpass-Light.ttf);
+    font-style: normal;
+    font-weight: 300;
+    }
+
       html {
           overflow-y: scroll;
       }
@@ -32,6 +61,7 @@
           padding-bottom: 100px;
           background-image: url("static/images/bg2.png");
           background-repeat: repeat;
+          font-family: "Overpass";
       }
 
       .navbar {
@@ -147,7 +177,7 @@
       .more {
           height: 2em;
           width: 2em;
-          padding-top: 0.4em;
+          padding-top: 0.3em;
           font-size: 1.5em;
           border-radius: 50%;
       }
