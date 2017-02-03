@@ -155,6 +155,7 @@ var Results = React.createClass({
             <th className="detail-data text-center"><i className="fa fa-info-circle fa-fw" aria-hidden="true"></i></th>
             <th className="detail-data">testcase</th>
             <th className="detail-data">item</th>
+            <th className="detail-data">note</th>
             <th className="detail-data text-right">submitted</th>
             <th className="text-center">detail</th>
         </tr>
@@ -192,6 +193,7 @@ var ResultInfo = React.createClass({
           <td className={"outcome text-center "+this.props.result.outcome}>{icon}</td>
           <td className="detail-data text-left">{this.props.result.testcase.name}</td>
           <td className="detail-data text-left">{this.props.result.data.item[0]}</td>
+          <td className="detail-data text-left">{this.props.result.note}</td>
           <td className="detail-data text-right">{this.props.result.submit_time.split(".")[0].replace("T", " ")}</td>
           <td className="detail-data text-center"><a className="" role="button" data-toggle="collapse" href={"#collapse"+this.props.result.id} aria-expanded="false" aria-controls="collapseExample">
               <i className="detail-toggle fa fa-chevron-circle-down fa-fw" aria-hidden="true"></i>
@@ -206,7 +208,7 @@ var ResultDetail = React.createClass({
   render: function(){
     return (
         <tr>
-          <td colSpan="5">
+          <td colSpan="6">
             <div className="collapse" id={"collapse"+this.props.result.id}>
               <pre className="text-left">
                 {JSON.stringify(this.props.result, null, ' ')}
