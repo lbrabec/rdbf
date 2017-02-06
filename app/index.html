@@ -92,21 +92,21 @@
       }
 
       .PASSED {
-        background-color: #639a81;
+        background-color: #639a81 !important;
         color:  #eee;
       }
       .FAILED {
-        background-color: #cc6168;
+        background-color: #cc6168 !important;
         color:  #eee;
       }
 
       .NEEDS_INSPECTION {
-        background-color: #cc8f60;
+        background-color: #cc8f60 !important;
         color:  #eee;
       }
 
       .INFO {
-        background-color: #63819a;
+        background-color: #63819a !important;
         color:  #eee;
       }
 
@@ -193,6 +193,41 @@
           border: none;
       }
 
+      .table-striped>tbody>tr:nth-child(even)>td{
+        background-color: #fff;
+      }
+
+      .checkbox {
+        border-radius: 4px;
+        border: 0px solid #eee;
+        padding: 0.5em;
+        padding-left: 2em;
+        margin: 0px;
+      }
+
+      #search-form-wrapper {
+        border: 1px solid #eee;
+        background-color: #fff;
+      }
+
+      .search-form {
+        margin: 1em;
+      }
+
+      #search-form-header {
+        background-color: #535452;
+        color: #eee;
+        width: 100%;
+        padding: 0.5em;
+        font-weight: bold;
+      }
+
+      .btn-search {
+        background-color: #535452;
+        color: #eee;
+        font-weight: bold;
+        margin-left: 50px;
+      }
     </style>
   </head>
   <body>
@@ -207,7 +242,7 @@
           </button>
           <a class="navbar-brand" href="#">
             <span style="position:relative; top: -2px;"><img src="static/images/taskotron-box.svg" style="height: 25px; top: -20px;"></span>
-            <span style="padding-left: 5px;">ResultsDB Frontend &nbsp;&nbsp;<span id="live-info"><i class="fa fa-circle fa-fw red"></i> Live&nbsp;&nbsp;&nbsp;&nbsp;
+            <span style="padding-left: 5px;">ResultsDB Frontend &nbsp;&nbsp;<span id="live-info"><i class="fa fa-circle fa-fw red"></i>&nbsp;Live
               </span><i class="fa fa-refresh fa-spin fa-fw" id="spinner"></i>
               <span class="hidden" id="timer-id"></span>
             </span>

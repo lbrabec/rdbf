@@ -119,11 +119,36 @@ refresh: function(accumulator = [], url = 'http://taskotron.fedoraproject.org/re
   render: function() {
     return (
       <div className="text-center">
+        <Search />
+        <br />
         <Results results={this.state.results} />
         <br />
         <button type="button" className="btn btn-default more" onClick={this.loadMoreWrapper}>
           <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
         </button>
+      </div>
+    )
+  }
+});
+
+var Search = React.createClass({
+  render: function(){
+    return (
+      <div id="search-form-wrapper">
+        <div id="search-form-header" className="text-left">&nbsp;&nbsp;<i className="fa fa-search" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;search</div>
+        <form className="search-form">
+          <input className="form-control" id="search-items" placeholder="items" />
+          <br />
+          <input className="form-control" id="search-testcases" placeholder="testcases" />
+          <br />
+          <div className="form-group">
+            <label className="checkbox-inline checkbox PASSED"><input className="check" type="checkbox" value="PASSED" /><i className="fa fa-check-circle fa-fw" aria-hidden="true"></i>&nbsp;PASSED</label>
+            <label className="checkbox-inline checkbox FAILED"><input type="checkbox" value="FAILED" /><i className="fa fa-times-circle fa-fw" aria-hidden="true"></i>&nbsp;FAILED</label>
+            <label className="checkbox-inline checkbox NEEDS_INSPECTION"><input type="checkbox" value="NEEDS_INSPECTION" /><i className="fa fa-question-circle fa-fw" aria-hidden="true"></i>&nbsp;NEEDS_INSPECTION</label>
+            <label className="checkbox-inline checkbox INFO"><input type="checkbox" value="INFO" /><i className="fa fa-info-circle fa-fw" aria-hidden="true"></i>&nbsp;INFO</label>
+            <button className="btn btn-search"><i className="fa fa-search" aria-hidden="true"></i>&nbsp;Search</button>
+          </div>
+        </form>
       </div>
     )
   }
