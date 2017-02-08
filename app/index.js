@@ -170,10 +170,10 @@ var Search = React.createClass({
     console.log(outcomes);
     var url = "?"
     if(this.state.items != ""){
-      url = url+"&item:like="+this.state.items;
+      url = url+"&item:like="+this.state.items.replace("*","%25");
     }
     if(this.state.testcases != ""){
-      url = url+"&testcases="+this.state.testcases;
+      url = url+"&testcases:like="+this.state.testcases.replace("*","%25");
     }
     if(outcomes.length > 0){
       url = url+"&outcome="+outcomes.reduce(function(a,b){return a+","+b});
