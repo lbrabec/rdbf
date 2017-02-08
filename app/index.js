@@ -2,7 +2,6 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var fetchJsonp = require('fetch-jsonp');
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
-var DayPicker = require("react-day-picker");
 
 var ResultsApp = React.createClass({
   getInitialState: function() {
@@ -171,7 +170,7 @@ var Search = React.createClass({
     console.log(outcomes);
     var url = "?"
     if(this.state.items != ""){
-      url = url+"&item="+this.state.items;
+      url = url+"&item:like="+this.state.items;
     }
     if(this.state.testcases != ""){
       url = url+"&testcases="+this.state.testcases;
@@ -256,6 +255,10 @@ var Results = React.createClass({
 
     var listResultsCombined = []
     listResults.forEach(function(e, i){listResultsCombined.push(e, listResultsDetails[i], empty)});
+    if(listResultsCombined.length == 0){
+      listResultsCombined = [<ResultsEmpty />];
+    }
+
     return (
       <div>
         <table className="table-striped">
@@ -278,6 +281,16 @@ var Results = React.createClass({
         </ReactCSSTransitionGroup>
         </table>
       </div>
+    )
+  }
+});
+
+var ResultsEmpty = React.createClass({
+  render: function(){
+    return (
+      <tr>
+        <td colSpan="6">no results found</td>
+      </tr>
     )
   }
 });
