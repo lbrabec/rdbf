@@ -2,14 +2,19 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var fetchJsonp = require('fetch-jsonp');
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+var DayPicker = require("react-day-picker");
 
 var ResultsApp = React.createClass({
   getInitialState: function() {
     //hm?
-    this.loadMore = this.loadMore.bind(this);
+    //this.loadMore = this.loadMore.bind(this);
 
-    this.refresh();
-    return {results: []};
+    //this.refresh();
+    return {
+      results: [],
+      urlBase: 'http://taskotron.fedoraproject.org/resultsdb_api/api/v2.0/results',
+      urlQuery: ""
+    };
   },
 
   goLive: function(){
@@ -45,6 +50,13 @@ var ResultsApp = React.createClass({
     this.endLive();
   },
 
+  handleSearch: function(url){
+    this.setState({urlQuery: url, results: []}, function(){
+      this.refresh([],"");
+    }.bind(this));
+
+  },
+
   handeData: function(data){
     if(this.state.results.length > 0) {
       var newestID = this.state.results[0].id;
@@ -56,8 +68,10 @@ var ResultsApp = React.createClass({
     }
   },
 
-refresh: function(accumulator = [], url = 'http://taskotron.fedoraproject.org/resultsdb_api/api/v2.0/results'){
-//  refresh: function(accumulator = [], url = 'http://10.34.28.154:5001/api/v2.0/results?testcases=depcheck'){
+  refresh: function(accumulator = [], url = ""){
+    if(url==""){
+      url = this.state.urlBase+this.state.urlQuery;
+    }
     $("#spinner").show();
     fetchJsonp(url)
     .then(function(response) {
@@ -92,7 +106,11 @@ refresh: function(accumulator = [], url = 'http://taskotron.fedoraproject.org/re
     this.loadMore(oldestID);
   },
 
-  loadMore: function(oldestID, url = 'http://taskotron.fedoraproject.org/resultsdb_api/api/v2.0/results') {
+  loadMore: function(oldestID, url = "") {
+      if(url==""){
+        url = this.state.urlBase+this.state.urlQuery;
+      }
+
       $("#spinner").show();
       fetchJsonp(url)
       .then(function(response) {
@@ -119,7 +137,7 @@ refresh: function(accumulator = [], url = 'http://taskotron.fedoraproject.org/re
   render: function() {
     return (
       <div className="text-center">
-        <Search />
+        <Search onSubmit={this.handleSearch}/>
         <br />
         <Results results={this.state.results} />
         <br />
@@ -132,20 +150,86 @@ refresh: function(accumulator = [], url = 'http://taskotron.fedoraproject.org/re
 });
 
 var Search = React.createClass({
+  getInitialState: function() {
+    return {
+      items: "",
+      testcases: "",
+      outcomeP: false,
+      outcomeF: false,
+      outcomeN: false,
+      outcomeI: false
+    };
+  },
+
+  handleSearch: function(event){
+    event.preventDefault();
+    var outcomes = ['PASSED', 'FAILED', 'NEEDS_INSPECTION', 'INFO'].filter(function(outcome){
+      const key = "outcome"+outcome[0];
+      return this.state[key];
+    }.bind(this));
+
+    console.log(outcomes);
+    var url = "?"
+    if(this.state.items != ""){
+      url = url+"&item="+this.state.items;
+    }
+    if(this.state.testcases != ""){
+      url = url+"&testcases="+this.state.testcases;
+    }
+    if(outcomes.length > 0){
+      url = url+"&outcome="+outcomes.reduce(function(a,b){return a+","+b});
+    }
+    console.log(url);
+    this.props.onSubmit(url);
+  },
+
+  handleCheckbox: function(event){
+    const name = event.target.name;
+    this.setState({
+      [name]: event.target.checked
+    });
+  },
+
+  handleText: function(event){
+    const name = event.target.name;
+    this.setState({
+      [name]: event.target.value
+    });
+  },
+
   render: function(){
     return (
-      <div id="search-form-wrapper">
+      <div id="search-form-wrapper" className="text-left">
         <div id="search-form-header" className="text-left">&nbsp;&nbsp;<i className="fa fa-search" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;search</div>
-        <form className="search-form">
-          <input className="form-control" id="search-items" placeholder="items" />
+        <form className="search-form" onSubmit={this.handleSearch}>
+          <input className="form-control" id="search-items" placeholder="items" name="items" value={this.state.items} onChange={this.handleText}/>
           <br />
-          <input className="form-control" id="search-testcases" placeholder="testcases" />
+          <input className="form-control" id="search-testcases" placeholder="testcases" name="testcases" value={this.state.testcases} onChange={this.handleText}/>
           <br />
           <div className="form-group">
-            <label className="checkbox-inline checkbox PASSED"><input className="check" type="checkbox" value="PASSED" /><i className="fa fa-check-circle fa-fw" aria-hidden="true"></i>&nbsp;PASSED</label>
-            <label className="checkbox-inline checkbox FAILED"><input type="checkbox" value="FAILED" /><i className="fa fa-times-circle fa-fw" aria-hidden="true"></i>&nbsp;FAILED</label>
-            <label className="checkbox-inline checkbox NEEDS_INSPECTION"><input type="checkbox" value="NEEDS_INSPECTION" /><i className="fa fa-question-circle fa-fw" aria-hidden="true"></i>&nbsp;NEEDS_INSPECTION</label>
-            <label className="checkbox-inline checkbox INFO"><input type="checkbox" value="INFO" /><i className="fa fa-info-circle fa-fw" aria-hidden="true"></i>&nbsp;INFO</label>
+            Select outcomes:
+            <div id="search-checkboxes">
+            <input type="checkbox" value="PASSED" id="checkbox-passed" checked={this.state.outcomeP} name="outcomeP" onChange={this.handleCheckbox}/>
+            <label className="checkbox-inline checkbox PASSED" htmlFor="checkbox-passed">
+              <i className="fa fa-check-circle fa-fw" aria-hidden="true"></i>&nbsp;PASSED
+            </label>
+
+            <input type="checkbox" value="FAILED" id="checkbox-failed" checked={this.state.outcomeF} name="outcomeF" onChange={this.handleCheckbox}/>
+            <label className="checkbox-inline checkbox FAILED" htmlFor="checkbox-failed">
+              <i className="fa fa-times-circle fa-fw" aria-hidden="true"></i>&nbsp;FAILED
+            </label>
+
+            <input type="checkbox" value="NEEDS_INSPECTION" id="checkbox-needs-inspection" checked={this.state.outcomeN} name="outcomeN" onChange={this.handleCheckbox}/>
+            <label className="checkbox-inline checkbox NEEDS_INSPECTION" htmlFor="checkbox-needs-inspection">
+              <i className="fa fa-question-circle fa-fw" aria-hidden="true"></i>&nbsp;NEEDS_INSPECTION
+            </label>
+
+            <input type="checkbox" value="INFO" id="checkbox-info" checked={this.state.outcomeI} name="outcomeI" onChange={this.handleCheckbox}/>
+            <label className="checkbox-inline checkbox INFO" htmlFor="checkbox-info">
+              <i className="fa fa-info-circle fa-fw" aria-hidden="true"></i>&nbsp;INFO
+            </label>
+            </div>
+
             <button className="btn btn-search"><i className="fa fa-search" aria-hidden="true"></i>&nbsp;Search</button>
           </div>
         </form>
@@ -219,7 +303,7 @@ var ResultInfo = React.createClass({
           <td className="detail-data text-left">{this.props.result.testcase.name}</td>
           <td className="detail-data text-left">{this.props.result.data.item[0]}</td>
           <td className="detail-data text-left">{this.props.result.note}</td>
-          <td className="detail-data text-right">{this.props.result.submit_time.split(".")[0].replace("T", " ")}</td>
+          <td className="detail-data text-right">{this.props.result.submit_time.split(".")[0].replace("T", "\n")}</td>
           <td className="detail-data text-center"><a className="" role="button" data-toggle="collapse" href={"#collapse"+this.props.result.id} aria-expanded="false" aria-controls="collapseExample">
               <i className="detail-toggle fa fa-chevron-circle-down fa-fw" aria-hidden="true"></i>
           </a></td>
@@ -244,7 +328,5 @@ var ResultDetail = React.createClass({
       )
   }
 });
-
-
 
 ReactDOM.render(<ResultsApp />, document.getElementById('app'));
