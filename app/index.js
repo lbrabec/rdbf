@@ -221,6 +221,7 @@ var Search = React.createClass({
             <div className="col-xs-6">
               Select outcomes:
               <div id="search-checkboxes">
+
                 <input type="checkbox" value="PASSED" id="checkbox-passed" checked={this.state.outcomeP} name="outcomeP" onChange={this.handleCheckbox}/>
                 <label className="checkbox-inline checkbox PASSED" htmlFor="checkbox-passed">
                   <i className="fa fa-check-circle fa-fw" aria-hidden="true"></i>&nbsp;PASSED
@@ -246,20 +247,11 @@ var Search = React.createClass({
             <div className="col-xs-6">
               Since:
               <div id="search-checkboxes">
-                <input type="radio" name="radioOne" id="radio-one" value="1" checked={this.state.since === '1'} onChange={this.handleRadio} />
-                <label className="radio-inline radiobox" htmlFor="radio-one">24 hours</label>
-
-                <input type="radio" name="radioThree" id="radio-three" value="3" checked={this.state.since === '3'} onChange={this.handleRadio} />
-                <label className="radio-inline radiobox" htmlFor="radio-three">3 days</label>
-
-                <input type="radio" name="radioWeek" id="radio-week" value="7" checked={this.state.since === '7'} onChange={this.handleRadio} />
-                <label className="radio-inline radiobox" htmlFor="radio-week">a week</label>
-
-                <input type="radio" name="radioMonth" id="radio-month" value="31" checked={this.state.since === '31'} onChange={this.handleRadio} />
-                <label className="radio-inline radiobox" htmlFor="radio-month">a month</label>
-
-                <input type="radio" name="radioUnlimited" id="radio-unlimited" value="0" checked={this.state.since === '0'} onChange={this.handleRadio} />
-                <label className="radio-inline radiobox" htmlFor="radio-unlimited">unlimited</label>
+                <Radio label="24 hours" value="1" checked={this.state.since} handler={this.handleRadio} />
+                <Radio label="3 days" value="3" checked={this.state.since} handler={this.handleRadio} />
+                <Radio label="a week" value="7" checked={this.state.since} handler={this.handleRadio} />
+                <Radio label="a month" value="31" checked={this.state.since} handler={this.handleRadio} />
+                <Radio label="unlimited" value="0" checked={this.state.since} handler={this.handleRadio} />
               </div>
             </div>
           </div>
@@ -267,6 +259,23 @@ var Search = React.createClass({
           <button className="btn btn-search"><i className="fa fa-search" aria-hidden="true"></i>&nbsp;Search</button>
         </form>
       </div>
+    )
+  }
+});
+
+var Radio = React.createClass({
+  handler: function(){
+      alert(this.props.name);
+  },
+
+  render: function(){
+    const name = "radio"+this.props.label.replace(" ", "");
+    //FIXME name should be the same?
+    return (
+      <label>
+        <input type="radio" name={name} id={name} value={this.props.value} checked={this.props.checked === this.props.value} onChange={this.props.handler} />
+        <span className="radio-inline radiobox" htmlFor={this.props.name}>{this.props.label}</span>
+      </label>
     )
   }
 });
