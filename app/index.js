@@ -217,51 +217,54 @@ var Search = React.createClass({
           <br />
           <input className="form-control" id="search-testcases" placeholder="testcases" name="testcases" value={this.state.testcases} onChange={this.handleText}/>
           <br />
-          <div className="form-group">
-            Select outcomes:
-            <div id="search-checkboxes">
-              <input type="checkbox" value="PASSED" id="checkbox-passed" checked={this.state.outcomeP} name="outcomeP" onChange={this.handleCheckbox}/>
-              <label className="checkbox-inline checkbox PASSED" htmlFor="checkbox-passed">
-                <i className="fa fa-check-circle fa-fw" aria-hidden="true"></i>&nbsp;PASSED
-              </label>
+          <div className="row">
+            <div className="col-xs-6">
+              Select outcomes:
+              <div id="search-checkboxes">
+                <input type="checkbox" value="PASSED" id="checkbox-passed" checked={this.state.outcomeP} name="outcomeP" onChange={this.handleCheckbox}/>
+                <label className="checkbox-inline checkbox PASSED" htmlFor="checkbox-passed">
+                  <i className="fa fa-check-circle fa-fw" aria-hidden="true"></i>&nbsp;PASSED
+                </label>
 
-              <input type="checkbox" value="FAILED" id="checkbox-failed" checked={this.state.outcomeF} name="outcomeF" onChange={this.handleCheckbox}/>
-              <label className="checkbox-inline checkbox FAILED" htmlFor="checkbox-failed">
-                <i className="fa fa-times-circle fa-fw" aria-hidden="true"></i>&nbsp;FAILED
-              </label>
+                <input type="checkbox" value="FAILED" id="checkbox-failed" checked={this.state.outcomeF} name="outcomeF" onChange={this.handleCheckbox}/>
+                <label className="checkbox-inline checkbox FAILED" htmlFor="checkbox-failed">
+                  <i className="fa fa-times-circle fa-fw" aria-hidden="true"></i>&nbsp;FAILED
+                </label>
 
-              <input type="checkbox" value="NEEDS_INSPECTION" id="checkbox-needs-inspection" checked={this.state.outcomeN} name="outcomeN" onChange={this.handleCheckbox}/>
-              <label className="checkbox-inline checkbox NEEDS_INSPECTION" htmlFor="checkbox-needs-inspection">
-                <i className="fa fa-question-circle fa-fw" aria-hidden="true"></i>&nbsp;NEEDS_INSPECTION
-              </label>
+                <input type="checkbox" value="NEEDS_INSPECTION" id="checkbox-needs-inspection" checked={this.state.outcomeN} name="outcomeN" onChange={this.handleCheckbox}/>
+                <label className="checkbox-inline checkbox NEEDS_INSPECTION" htmlFor="checkbox-needs-inspection">
+                  <i className="fa fa-question-circle fa-fw" aria-hidden="true"></i>&nbsp;NEEDS_INSPECTION
+                </label>
 
-              <input type="checkbox" value="INFO" id="checkbox-info" checked={this.state.outcomeI} name="outcomeI" onChange={this.handleCheckbox}/>
-              <label className="checkbox-inline checkbox INFO" htmlFor="checkbox-info">
-                <i className="fa fa-info-circle fa-fw" aria-hidden="true"></i>&nbsp;INFO
-              </label>
+                <input type="checkbox" value="INFO" id="checkbox-info" checked={this.state.outcomeI} name="outcomeI" onChange={this.handleCheckbox}/>
+                <label className="checkbox-inline checkbox INFO" htmlFor="checkbox-info">
+                  <i className="fa fa-info-circle fa-fw" aria-hidden="true"></i>&nbsp;INFO
+                </label>
+              </div>
             </div>
 
-            Since:
-            <div id="search-checkboxes">
-              <input type="radio" name="radioOne" id="radio-one" value="1" checked={this.state.since === '1'} onChange={this.handleRadio} />
-              <label className="radio-inline radiobox" htmlFor="radio-one">24 hours</label>
+            <div className="col-xs-6">
+              Since:
+              <div id="search-checkboxes">
+                <input type="radio" name="radioOne" id="radio-one" value="1" checked={this.state.since === '1'} onChange={this.handleRadio} />
+                <label className="radio-inline radiobox" htmlFor="radio-one">24 hours</label>
 
-              <input type="radio" name="radioThree" id="radio-three" value="3" checked={this.state.since === '3'} onChange={this.handleRadio} />
-              <label className="radio-inline radiobox" htmlFor="radio-three">3 days</label>
+                <input type="radio" name="radioThree" id="radio-three" value="3" checked={this.state.since === '3'} onChange={this.handleRadio} />
+                <label className="radio-inline radiobox" htmlFor="radio-three">3 days</label>
 
-              <input type="radio" name="radioWeek" id="radio-week" value="7" checked={this.state.since === '7'} onChange={this.handleRadio} />
-              <label className="radio-inline radiobox" htmlFor="radio-week">a week</label>
+                <input type="radio" name="radioWeek" id="radio-week" value="7" checked={this.state.since === '7'} onChange={this.handleRadio} />
+                <label className="radio-inline radiobox" htmlFor="radio-week">a week</label>
 
-              <input type="radio" name="radioMonth" id="radio-month" value="31" checked={this.state.since === '31'} onChange={this.handleRadio} />
-              <label className="radio-inline radiobox" htmlFor="radio-month">a month</label>
+                <input type="radio" name="radioMonth" id="radio-month" value="31" checked={this.state.since === '31'} onChange={this.handleRadio} />
+                <label className="radio-inline radiobox" htmlFor="radio-month">a month</label>
 
-              <input type="radio" name="radioUnlimited" id="radio-unlimited" value="0" checked={this.state.since === '0'} onChange={this.handleRadio} />
-              <label className="radio-inline radiobox" htmlFor="radio-unlimited">unlimited</label>
+                <input type="radio" name="radioUnlimited" id="radio-unlimited" value="0" checked={this.state.since === '0'} onChange={this.handleRadio} />
+                <label className="radio-inline radiobox" htmlFor="radio-unlimited">unlimited</label>
+              </div>
             </div>
-
-
-            <button className="btn btn-search"><i className="fa fa-search" aria-hidden="true"></i>&nbsp;Search</button>
           </div>
+
+          <button className="btn btn-search"><i className="fa fa-search" aria-hidden="true"></i>&nbsp;Search</button>
         </form>
       </div>
     )
