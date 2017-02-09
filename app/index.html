@@ -208,6 +208,17 @@
         color: #535452 !important;
       }
 
+      .radiobox {
+        border-radius: 4px;
+        border: 1px solid #eee;
+        padding: 0.5em;
+        !padding-left: 2em;
+        margin: 0px;
+        margin-right: 1em;
+        background-color: #fff !important;
+        color: #535452 !important;
+      }
+
       #search-form-wrapper {
         border: 1px solid #eee;
         background-color: #fff;
@@ -236,8 +247,17 @@
         display: none;
       }
 
+      #search-form-wrapper input[type=radio] {
+        display: none;
+      }
+
       #search-form-wrapper input[type=checkbox]:checked + label {
         color: #eee !important;
+      }
+
+      #search-form-wrapper input[type=radio]:checked + label {
+        color: #eee !important;
+        background-color: #535452 !important;
       }
 
       #search-form-wrapper input[type=checkbox]:checked + label.PASSED {
