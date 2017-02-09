@@ -154,10 +154,10 @@ var Search = React.createClass({
     return {
       items: "",
       testcases: "",
-      outcomeP: false,
-      outcomeF: false,
-      outcomeN: false,
-      outcomeI: false,
+      PASSED: false,
+      FAILED: false,
+      NEEDS_INSPECTION: false,
+      INFO: false,
       since: '31'
     };
   },
@@ -165,8 +165,8 @@ var Search = React.createClass({
   handleSearch: function(event){
     event.preventDefault();
     var outcomes = ['PASSED', 'FAILED', 'NEEDS_INSPECTION', 'INFO'].filter(function(outcome){
-      const key = "outcome"+outcome[0];
-      return this.state[key];
+      //const key = "outcome"+outcome[0];
+      return this.state[outcome];
     }.bind(this));
 
     console.log(outcomes);
@@ -221,26 +221,10 @@ var Search = React.createClass({
             <div className="col-xs-6">
               Select outcomes:
               <div id="search-checkboxes">
-
-                <input type="checkbox" value="PASSED" id="checkbox-passed" checked={this.state.outcomeP} name="outcomeP" onChange={this.handleCheckbox}/>
-                <label className="checkbox-inline checkbox PASSED" htmlFor="checkbox-passed">
-                  <i className="fa fa-check-circle fa-fw" aria-hidden="true"></i>&nbsp;PASSED
-                </label>
-
-                <input type="checkbox" value="FAILED" id="checkbox-failed" checked={this.state.outcomeF} name="outcomeF" onChange={this.handleCheckbox}/>
-                <label className="checkbox-inline checkbox FAILED" htmlFor="checkbox-failed">
-                  <i className="fa fa-times-circle fa-fw" aria-hidden="true"></i>&nbsp;FAILED
-                </label>
-
-                <input type="checkbox" value="NEEDS_INSPECTION" id="checkbox-needs-inspection" checked={this.state.outcomeN} name="outcomeN" onChange={this.handleCheckbox}/>
-                <label className="checkbox-inline checkbox NEEDS_INSPECTION" htmlFor="checkbox-needs-inspection">
-                  <i className="fa fa-question-circle fa-fw" aria-hidden="true"></i>&nbsp;NEEDS_INSPECTION
-                </label>
-
-                <input type="checkbox" value="INFO" id="checkbox-info" checked={this.state.outcomeI} name="outcomeI" onChange={this.handleCheckbox}/>
-                <label className="checkbox-inline checkbox INFO" htmlFor="checkbox-info">
-                  <i className="fa fa-info-circle fa-fw" aria-hidden="true"></i>&nbsp;INFO
-                </label>
+                <Checkbox value="PASSED" checked={this.state.PASSED} handler={this.handleCheckbox}><Icon type="check-circle" />&nbsp;</Checkbox>
+                <Checkbox value="FAILED" checked={this.state.FAILED} handler={this.handleCheckbox}><Icon type="times-circle" />&nbsp;</Checkbox>
+                <Checkbox value="NEEDS_INSPECTION" checked={this.state.NEEDS_INSPECTION} handler={this.handleCheckbox}><Icon type="question-circle" />&nbsp;</Checkbox>
+                <Checkbox value="INFO" checked={this.state.INFO} handler={this.handleCheckbox}><Icon type="info-circle" />&nbsp;</Checkbox>
               </div>
             </div>
 
@@ -263,11 +247,30 @@ var Search = React.createClass({
   }
 });
 
-var Radio = React.createClass({
-  handler: function(){
-      alert(this.props.name);
-  },
 
+var Icon = React.createClass({
+  render: function(){
+    return (
+      <i className={"fa fa-"+this.props.type+" fa-fw"} aria-hidden="true"></i>
+    )
+  }
+});
+
+var Checkbox = React.createClass({
+  render: function(){
+    const name = "checkbox"+this.props.value.replace(" ", "");
+    return (
+      <label>
+        <input type="checkbox" value={this.props.value} id={name} checked={this.props.checked} name={this.props.value} onChange={this.props.handler}/>
+        <span className={"checkbox-inline checkbox "+this.props.value} htmlFor={name}>
+          {this.props.children}{this.props.value}
+        </span>
+      </label>
+    )
+  }
+});
+
+var Radio = React.createClass({
   render: function(){
     const name = "radio"+this.props.label.replace(" ", "");
     //FIXME name should be the same?

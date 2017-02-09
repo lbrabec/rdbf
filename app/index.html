@@ -251,7 +251,11 @@
         display: none;
       }
 
-      #search-form-wrapper input[type=checkbox]:checked + label {
+      label {
+        margin: 0;
+      }
+
+      #search-form-wrapper input[type=checkbox]:checked + span {
         color: #eee !important;
       }
 
@@ -260,22 +264,22 @@
         background-color: #535452 !important;
       }
 
-      #search-form-wrapper input[type=checkbox]:checked + label.PASSED {
+      #search-form-wrapper input[type=checkbox]:checked + .PASSED {
         background-color: #639a81 !important;
         border-color: #639a81;
       }
 
-      #search-form-wrapper input[type=checkbox]:checked + label.FAILED {
+      #search-form-wrapper input[type=checkbox]:checked + .FAILED {
         background-color: #cc6168 !important;
         border-color: #cc6168;
       }
 
-      #search-form-wrapper input[type=checkbox]:checked + label.NEEDS_INSPECTION {
+      #search-form-wrapper input[type=checkbox]:checked + .NEEDS_INSPECTION {
         background-color: #cc8f60 !important;
         border-color: #cc8f60;
       }
 
-      #search-form-wrapper input[type=checkbox]:checked + label.INFO {
+      #search-form-wrapper input[type=checkbox]:checked + .INFO {
         background-color: #63819a !important;
         border-color: #63819a;
       }
