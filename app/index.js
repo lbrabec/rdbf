@@ -152,6 +152,17 @@ var ResultsApp = React.createClass({
 
 var Search = React.createClass({
   getInitialState: function() {
+    fetchJsonp("https://taskotron.fedoraproject.org/resultsdb_api/api/v2.0/testcases?limit=1000")
+    .then(function(response) {
+      return response.json()
+    }).then(function(json) {
+      console.log(json.data.map(function(tc){return tc.name}));
+      this.setState({tokens: json.data.map(function(tc){return tc.name})});
+    }.bind(this))
+    .catch(function(ex) {
+      console.log('parsing failed', ex)
+    });
+
     return {
       items: "",
       testcases: "",
@@ -159,7 +170,8 @@ var Search = React.createClass({
       FAILED: false,
       NEEDS_INSPECTION: false,
       INFO: false,
-      since: '31'
+      since: '31',
+      tokens: []
     };
   },
 
@@ -233,7 +245,7 @@ var Search = React.createClass({
         <form className="search-form" onSubmit={this.handleSearch}>
           <input className="form-control" id="search-items" placeholder="items" name="items" value={this.state.items} onChange={this.handleText}/>
           <br />
-          <Typeahead options={testcases} minLength={1} multiple allowNew newSelectionPrefix="" placeholder="testcases" onChange={this.handleTestcases}/>
+          <Typeahead options={this.state.tokens} minLength={1} multiple allowNew newSelectionPrefix="" placeholder="testcases" onChange={this.handleTestcases}/>
           <br />
           <div className="row">
             <div className="col-xs-6">
