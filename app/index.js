@@ -3,6 +3,7 @@ var ReactDOM = require('react-dom');
 var fetchJsonp = require('fetch-jsonp');
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 var Moment = require('moment');
+var Typeahead = require('react-bootstrap-typeahead').Typeahead;
 
 var ResultsApp = React.createClass({
   getInitialState: function() {
@@ -208,7 +209,19 @@ var Search = React.createClass({
     });
   },
 
+  handleTestcases: function(selected){
+    if(selected.length == 0){
+      selected = [""];
+    }
+    this.setState({
+      testcases: selected.reduce(function(a,b){return a+","+b})
+    });
+  },
+
   render: function(){
+    //fixme...
+    var testcases = ["depcheck", "rpmlint", "upgradepath", "dist.abicheck", "dist.depcheck", "dist.modulemd", "dist.python-versions", "dist.rpmdeplint", "dist.rpmgrill", "dist.rpmlint", "dist.upgradepath", "scratch.dockerautotest", "scratch.libabigail", "scratch.test atomic image with upstram ansible tests", "scratch.test httpd docker image", "dist.rpmgrill.build-log", "dist.rpmgrill.desktop-lint", "dist.rpmgrill.elf-checks", "dist.rpmgrill.lib-gather", "dist.rpmgrill.man-pages", "dist.rpmgrill.manifest", "dist.rpmgrill.multilib", "dist.rpmgrill.patches", "dist.rpmgrill.rpm-scripts", "dist.rpmgrill.security-policy", "dist.rpmgrill.setxid", "dist.rpmgrill.spec-file-encoding", "dist.rpmgrill.spec-file-sanity", "dist.rpmgrill.virus-check", "scratch.atomic-host-tests.admin-unlock", "scratch.atomic-host-tests.docker", "scratch.atomic-host-tests.improved-sanity-test", "scratch.atomic-host-tests.k8-cluster", "scratch.atomic-host-tests.multiple-rollback", "scratch.atomic-host-tests.multiple-rollback-reboot", "scratch.atomic-host-tests.new-image-smoketest", "scratch.atomic-host-tests.new-tree-smoketest", "scratch.atomic-host-tests.pkg-layering", "scratch.atomic-host-tests.rollback-interrupt", "scratch.atomic-host-tests.system-containers", "scratch.atomic-host-tests.unique-machine-id", "scratch.atomic-host-tests.upgrade-interrupt", "dist.modulemd.check_modulemd.ModulemdTest.test_api", "dist.modulemd.check_modulemd.ModulemdTest.test_component_availability", "dist.modulemd.check_modulemd.ModulemdTest.test_components", "dist.modulemd.check_modulemd.ModulemdTest.test_debugdump", "dist.modulemd.check_modulemd.ModulemdTest.test_dependencies", "dist.modulemd.check_modulemd.ModulemdTest.test_description", "dist.modulemd.check_modulemd.ModulemdTest.test_description_spelling", "dist.modulemd.check_modulemd.ModulemdTest.test_rationales", "dist.modulemd.check_modulemd.ModulemdTest.test_rationales_spelling", "dist.modulemd.check_modulemd.ModulemdTest.test_summary", "dist.modulemd.check_modulemd.ModulemdTest.test_summary_spelling"];
+
     return (
       <div id="search-form-wrapper" className="text-left">
         <div id="search-form-header" className="text-left">&nbsp;&nbsp;<i className="fa fa-search" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;search</div>
@@ -216,6 +229,8 @@ var Search = React.createClass({
           <input className="form-control" id="search-items" placeholder="items" name="items" value={this.state.items} onChange={this.handleText}/>
           <br />
           <input className="form-control" id="search-testcases" placeholder="testcases" name="testcases" value={this.state.testcases} onChange={this.handleText}/>
+          <br />
+          <Typeahead options={testcases} minLength="1" multiple allowNew newSelectionPrefix="" placeholder="testcases" onChange={this.handleTestcases}/>
           <br />
           <div className="row">
             <div className="col-xs-6">
