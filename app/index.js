@@ -212,7 +212,12 @@ var Search = React.createClass({
   handleTestcases: function(selected){
     if(selected.length == 0){
       selected = [""];
+    } else {
+      selected = selected.map(function(s){
+        return typeof(s) === 'string'? s : s.label
+      });
     }
+    console.log(selected.reduce(function(a,b){return a+","+b}));
     this.setState({
       testcases: selected.reduce(function(a,b){return a+","+b})
     });
@@ -228,9 +233,7 @@ var Search = React.createClass({
         <form className="search-form" onSubmit={this.handleSearch}>
           <input className="form-control" id="search-items" placeholder="items" name="items" value={this.state.items} onChange={this.handleText}/>
           <br />
-          <input className="form-control" id="search-testcases" placeholder="testcases" name="testcases" value={this.state.testcases} onChange={this.handleText}/>
-          <br />
-          <Typeahead options={testcases} minLength="1" multiple allowNew newSelectionPrefix="" placeholder="testcases" onChange={this.handleTestcases}/>
+          <Typeahead options={testcases} minLength={1} multiple allowNew newSelectionPrefix="" placeholder="testcases" onChange={this.handleTestcases}/>
           <br />
           <div className="row">
             <div className="col-xs-6">
@@ -317,7 +320,7 @@ var Results = React.createClass({
     var listResultsCombined = []
     listResults.forEach(function(e, i){listResultsCombined.push(e, listResultsDetails[i], empty)});
     if(listResultsCombined.length == 0){
-      listResultsCombined = [<ResultsEmpty />];
+      listResultsCombined = [<ResultsEmpty key="empty"/>];
     }
 
     return (
