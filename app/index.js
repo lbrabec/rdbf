@@ -170,19 +170,25 @@ var Search = React.createClass({
 
     const query = queryString.parse(location.search)
     console.log(query);
+    if(!$.isEmptyObject(query)){}
     return {
-      items: ("item:like" in query)? query["item:like"] : "",
+      items: ("item:like" in query)? query["item:like"].replace("%","*") : "", //FIXME!!
       testcases: ("testcases:like" in query)? query["testcases:like"] : "",
       PASSED: ("outcome" in query)? query.outcome.includes('PASSED') : false,
       FAILED: ("outcome" in query)? query.outcome.includes('FAILED') : false,
       NEEDS_INSPECTION: ("outcome" in query)? query.outcome.includes('NEEDS_INSPECTION') : false,
       INFO: ("outcome" in query)? query.outcome.includes('INFO') : false,
       since: '31',
-      tokens: []
+      tokens: [],
+      doInitialSearch: !$.isEmptyObject(query)
     };
   },
 
-  handleSearch: function(event){
+  componentDidMount: function(){
+    if(this.state.doInitialSearch) this.handleSearch();
+  },
+
+  handleSearch: function(event = {"preventDefault": function(){}}){
     event.preventDefault();
     var outcomes = ['PASSED', 'FAILED', 'NEEDS_INSPECTION', 'INFO'].filter(function(outcome){
       //const key = "outcome"+outcome[0];
