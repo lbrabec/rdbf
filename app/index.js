@@ -55,7 +55,7 @@ var ResultsApp = React.createClass({
     this.setState({urlQuery: url, results: []}, function(){
       this.refresh([],"");
     }.bind(this));
-
+    history.pushState(null,null,"/results"+url);
   },
 
   handeData: function(data){
