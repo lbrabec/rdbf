@@ -23,7 +23,7 @@ var ResultsApp = React.createClass({
     return {
       results: [],
       urlBase: 'http://taskotron.fedoraproject.org/resultsdb_api/api/v2.0/results',
-      urlQuery: ""
+      urlQuery: "",
     };
   },
 
@@ -43,7 +43,9 @@ var ResultsApp = React.createClass({
   },
 
   componentDidMount: function(){
-    this.refresh();
+    if($.isEmptyObject(queryString.parse(location.search))) {
+      this.refresh();
+    }
     this.goLive();
 
     //wrong place?
@@ -62,7 +64,7 @@ var ResultsApp = React.createClass({
 
   handleSearch: function(url){
     this.setState({urlQuery: url, results: []}, function(){
-      this.refresh([],"", override=true);
+      this.refresh([],"");
     }.bind(this));
     history.pushState(null,null,"/results"+url);
   },
@@ -78,9 +80,7 @@ var ResultsApp = React.createClass({
     }
   },
 
-  refresh: function(accumulator = [], url = "", override = false){
-    if(!$.isEmptyObject(queryString.parse(location.search)) && !override) return
-
+  refresh: function(accumulator = [], url = ""){
     if(url==""){
       url = this.state.urlBase+this.state.urlQuery;
     }
