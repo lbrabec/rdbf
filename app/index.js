@@ -9,6 +9,7 @@ var browserHistory = require('react-router').browserHistory
 var ResultsApp = require("./components/resultsapp").ResultsApp;
 
 require('react-datepicker/dist/react-datepicker.css');
+require('./static/style.css');
 
 
 ReactDOM.render(
