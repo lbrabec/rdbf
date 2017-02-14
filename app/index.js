@@ -1,9 +1,15 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var Router = require('react-router').Router
+var Route = require('react-router').Route
+var Link = require('react-router').Link
+var Redirect = require('react-router').Redirect
+var browserHistory = require('react-router').browserHistory
 var fetchJsonp = require('fetch-jsonp');
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 var Moment = require('moment');
 var Typeahead = require('react-bootstrap-typeahead').Typeahead;
+var queryString = require('query-string');
 
 var ResultsApp = React.createClass({
   getInitialState: function() {
@@ -156,12 +162,13 @@ var Search = React.createClass({
     .then(function(response) {
       return response.json()
     }).then(function(json) {
-      console.log(json.data.map(function(tc){return tc.name}));
       this.setState({tokens: json.data.map(function(tc){return tc.name})});
     }.bind(this))
     .catch(function(ex) {
       console.log('parsing failed', ex)
     });
+
+    console.log(queryString.parse(location.search));
 
     return {
       items: "",
@@ -418,4 +425,9 @@ var ResultDetail = React.createClass({
   }
 });
 
-ReactDOM.render(<ResultsApp />, document.getElementById('app'));
+ReactDOM.render(
+  <Router history={browserHistory}>
+    <Route path="/results" component={ResultsApp} />
+    <Redirect from="/" to="/results" />
+  </Router>
+  , document.getElementById('app'));
