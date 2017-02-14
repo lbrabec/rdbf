@@ -62,7 +62,7 @@ var ResultsApp = React.createClass({
 
   handleSearch: function(url){
     this.setState({urlQuery: url, results: []}, function(){
-      this.refresh([],"");
+      this.refresh([],"", override=true);
     }.bind(this));
     history.pushState(null,null,"/results"+url);
   },
@@ -78,7 +78,9 @@ var ResultsApp = React.createClass({
     }
   },
 
-  refresh: function(accumulator = [], url = ""){
+  refresh: function(accumulator = [], url = "", override = false){
+    if(!$.isEmptyObject(queryString.parse(location.search)) && !override) return
+
     if(url==""){
       url = this.state.urlBase+this.state.urlQuery;
     }
@@ -173,7 +175,7 @@ var Search = React.createClass({
 
     const query = queryString.parse(location.search)
     console.log(query);
-    if(!$.isEmptyObject(query)){}
+    if(!$.isEmptyObject(queryString.parse(location.search))){}
     return {
       items: ("item:like" in query)? query["item:like"].replace("%","*") : "", //FIXME!!
       testcases: ("testcases:like" in query)? query["testcases:like"] : "",
@@ -189,7 +191,7 @@ var Search = React.createClass({
   },
 
   componentDidMount: function(){
-    setTimeout(function(){ if(this.state.doInitialSearch) this.handleSearch(); }.bind(this), 1000); //FIXME remove timeout and ensure refresh is not invoked
+    if(this.state.doInitialSearch) this.handleSearch();
   },
 
   handleSearch: function(event = {"preventDefault": function(){}}){
