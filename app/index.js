@@ -168,15 +168,15 @@ var Search = React.createClass({
       console.log('parsing failed', ex)
     });
 
-    console.log(queryString.parse(location.search));
-
+    const query = queryString.parse(location.search)
+    console.log(query);
     return {
-      items: "",
-      testcases: "",
-      PASSED: false,
-      FAILED: false,
-      NEEDS_INSPECTION: false,
-      INFO: false,
+      items: ("item:like" in query)? query["item:like"] : "",
+      testcases: ("testcases:like" in query)? query["testcases:like"] : "",
+      PASSED: ("outcome" in query)? query.outcome.includes('PASSED') : false,
+      FAILED: ("outcome" in query)? query.outcome.includes('FAILED') : false,
+      NEEDS_INSPECTION: ("outcome" in query)? query.outcome.includes('NEEDS_INSPECTION') : false,
+      INFO: ("outcome" in query)? query.outcome.includes('INFO') : false,
       since: '31',
       tokens: []
     };
@@ -252,7 +252,7 @@ var Search = React.createClass({
         <form className="search-form" onSubmit={this.handleSearch}>
           <input className="form-control" id="search-items" placeholder="items" name="items" value={this.state.items} onChange={this.handleText}/>
           <br />
-          <Typeahead options={this.state.tokens} minLength={1} multiple allowNew newSelectionPrefix="" placeholder="testcases" onChange={this.handleTestcases}/>
+          <Typeahead options={this.state.tokens} minLength={1} multiple allowNew newSelectionPrefix="" placeholder="testcases" onChange={this.handleTestcases} selected={function(tcs){return tcs==""? [] : tcs.split(',')}(this.state.testcases)}/>
           <br />
           <div className="row">
             <div className="col-xs-6">
