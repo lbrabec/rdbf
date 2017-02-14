@@ -10,6 +10,9 @@ var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 var Moment = require('moment');
 var Typeahead = require('react-bootstrap-typeahead').Typeahead;
 var queryString = require('query-string');
+var DatePicker = require('react-datepicker');
+
+require('react-datepicker/dist/react-datepicker.css');
 
 var ResultsApp = React.createClass({
   getInitialState: function() {
@@ -178,14 +181,15 @@ var Search = React.createClass({
       FAILED: ("outcome" in query)? query.outcome.includes('FAILED') : false,
       NEEDS_INSPECTION: ("outcome" in query)? query.outcome.includes('NEEDS_INSPECTION') : false,
       INFO: ("outcome" in query)? query.outcome.includes('INFO') : false,
-      since: '31',
+      since: ("since" in query)? "custom" : "31",
       tokens: [],
+      sinceDate: ("since" in query)? Moment(query.since) : "",
       doInitialSearch: !$.isEmptyObject(query)
     };
   },
 
   componentDidMount: function(){
-    if(this.state.doInitialSearch) this.handleSearch();
+    setTimeout(function(){ if(this.state.doInitialSearch) this.handleSearch(); }.bind(this), 1000); //FIXME remove timeout and ensure refresh is not invoked
   },
 
   handleSearch: function(event = {"preventDefault": function(){}}){
@@ -207,7 +211,11 @@ var Search = React.createClass({
       url = url+"&outcome="+outcomes.reduce(function(a,b){return a+","+b});
     }
     if(this.state.since != '0'){
-      url = url+"&since="+Moment().subtract(this.state.since, 'days').toISOString();
+      if(this.state.since == "custom"){
+        url = url+"&since="+this.state.sinceDate.toISOString();
+      } else {
+        url = url+"&since="+Moment().subtract(this.state.since, 'days').toISOString();
+      }
     }
 
     console.log(url);
@@ -248,10 +256,14 @@ var Search = React.createClass({
     });
   },
 
-  render: function(){
-    //fixme...
-    var testcases = ["depcheck", "rpmlint", "upgradepath", "dist.abicheck", "dist.depcheck", "dist.modulemd", "dist.python-versions", "dist.rpmdeplint", "dist.rpmgrill", "dist.rpmlint", "dist.upgradepath", "scratch.dockerautotest", "scratch.libabigail", "scratch.test atomic image with upstram ansible tests", "scratch.test httpd docker image", "dist.rpmgrill.build-log", "dist.rpmgrill.desktop-lint", "dist.rpmgrill.elf-checks", "dist.rpmgrill.lib-gather", "dist.rpmgrill.man-pages", "dist.rpmgrill.manifest", "dist.rpmgrill.multilib", "dist.rpmgrill.patches", "dist.rpmgrill.rpm-scripts", "dist.rpmgrill.security-policy", "dist.rpmgrill.setxid", "dist.rpmgrill.spec-file-encoding", "dist.rpmgrill.spec-file-sanity", "dist.rpmgrill.virus-check", "scratch.atomic-host-tests.admin-unlock", "scratch.atomic-host-tests.docker", "scratch.atomic-host-tests.improved-sanity-test", "scratch.atomic-host-tests.k8-cluster", "scratch.atomic-host-tests.multiple-rollback", "scratch.atomic-host-tests.multiple-rollback-reboot", "scratch.atomic-host-tests.new-image-smoketest", "scratch.atomic-host-tests.new-tree-smoketest", "scratch.atomic-host-tests.pkg-layering", "scratch.atomic-host-tests.rollback-interrupt", "scratch.atomic-host-tests.system-containers", "scratch.atomic-host-tests.unique-machine-id", "scratch.atomic-host-tests.upgrade-interrupt", "dist.modulemd.check_modulemd.ModulemdTest.test_api", "dist.modulemd.check_modulemd.ModulemdTest.test_component_availability", "dist.modulemd.check_modulemd.ModulemdTest.test_components", "dist.modulemd.check_modulemd.ModulemdTest.test_debugdump", "dist.modulemd.check_modulemd.ModulemdTest.test_dependencies", "dist.modulemd.check_modulemd.ModulemdTest.test_description", "dist.modulemd.check_modulemd.ModulemdTest.test_description_spelling", "dist.modulemd.check_modulemd.ModulemdTest.test_rationales", "dist.modulemd.check_modulemd.ModulemdTest.test_rationales_spelling", "dist.modulemd.check_modulemd.ModulemdTest.test_summary", "dist.modulemd.check_modulemd.ModulemdTest.test_summary_spelling"];
+  handleDate: function(date) {
+    this.setState({
+      sinceDate: date
+    });
+  },
 
+  render: function(){
+    
     return (
       <div id="search-form-wrapper" className="text-left">
         <div id="search-form-header" className="text-left">&nbsp;&nbsp;<i className="fa fa-search" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;search</div>
@@ -279,12 +291,17 @@ var Search = React.createClass({
                 <Radio label="a week" value="7" checked={this.state.since} handler={this.handleRadio} />
                 <Radio label="a month" value="31" checked={this.state.since} handler={this.handleRadio} />
                 <Radio label="unlimited" value="0" checked={this.state.since} handler={this.handleRadio} />
+                <Radio label="custom" value="custom" checked={this.state.since} handler={this.handleRadio}>
+                  <DatePicker onChange={this.handleDate} selected={this.state.sinceDate}/>
+                </Radio>
               </div>
+              
             </div>
           </div>
 
           <button className="btn btn-search"><i className="fa fa-search" aria-hidden="true"></i>&nbsp;Search</button>
         </form>
+        
       </div>
     )
   }
@@ -320,7 +337,7 @@ var Radio = React.createClass({
     return (
       <label>
         <input type="radio" name={name} id={name} value={this.props.value} checked={this.props.checked === this.props.value} onChange={this.props.handler} />
-        <span className="radio-inline radiobox" htmlFor={this.props.name}>{this.props.label}</span>
+        <span className="radio-inline radiobox" htmlFor={this.props.name}>{this.props.label}&nbsp;{this.props.children}</span>
       </label>
     )
   }
