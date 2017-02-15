@@ -116,8 +116,6 @@ body {
 }
 
 .result-detail {
-    !border: 1px solid #eee;
-    !border-radius: 6px;
     height: 2em;
 }
 
@@ -136,8 +134,6 @@ th {
 }
 
 .detail-data {
-    !padding-left: 1em;
-    !padding-right: 1em;
     padding: 0.5em;
 }
 
@@ -187,7 +183,6 @@ th {
     border-radius: 4px;
     border: 1px solid #eee;
     padding: 0.5em;
-    !padding-left: 2em;
     margin: 0px;
     margin-right: 1em;
     background-color: #fff !important;
@@ -198,7 +193,6 @@ th {
     border-radius: 4px;
     border: 1px solid #eee;
     padding: 0.5em;
-    !padding-left: 2em;
     margin: 0px;
     margin-right: 1em;
     background-color: #fff !important;
