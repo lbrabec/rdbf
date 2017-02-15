@@ -59,6 +59,20 @@ body {
     color: #639a81 !important;
 }
 
+.navbar .logo {
+    position: relative; 
+    top: -2px;
+}
+
+.navbar .logo img {
+    height: 25px; 
+    top: -20px;
+}
+
+.navbar .logo-text {
+    padding-left: 5px;
+}
+
 .PASSED {
     background-color: #639a81 !important;
     color: #eee;

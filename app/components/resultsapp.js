@@ -1,6 +1,7 @@
 var React = require('react');
 var fetchJsonp = require('fetch-jsonp');
 var queryString = require('query-string');
+var Navbar = require("../components/navbar").Navbar;
 var Search = require("../components/search").Search;
 var Results = require("../components/results").Results;
 
@@ -139,14 +140,17 @@ export var ResultsApp = React.createClass({
 
   render: function() {
     return (
-      <div className="text-center">
-        <Search onSubmit={this.handleSearch}/>
-        <br />
-        <Results results={this.state.results} />
-        <br />
-        <button type="button" className="btn btn-default more" onClick={this.loadMoreWrapper}>
-          <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
-        </button>
+      <div>
+        <Navbar />
+        <div className="text-center container">
+          <Search onSubmit={this.handleSearch}/>
+          <br />
+          <Results results={this.state.results} />
+          <br />
+          <button type="button" className="btn btn-default more" onClick={this.loadMoreWrapper}>
+            <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
+          </button>
+        </div>
       </div>
     )
   }
