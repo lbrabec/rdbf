@@ -114,7 +114,7 @@ export var Search = React.createClass({
     
     return (
       <div id="search-form-wrapper" className="text-left">
-        <div id="search-form-header" className="text-left">&nbsp;&nbsp;<i className="fa fa-search" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;search</div>
+        <div id="search-form-header" className="text-left">&nbsp;&nbsp;<Icon type="search" />&nbsp;&nbsp;&nbsp;search</div>
         <form className="search-form" onSubmit={this.handleSearch}>
           <input className="form-control" id="search-items" placeholder="items" name="items" value={this.state.items} onChange={this.handleText}/>
           <br />
@@ -134,20 +134,20 @@ export var Search = React.createClass({
             <div className="col-xs-6">
               Since:
               <div id="search-checkboxes">
-                <Radio label="24 hours" value="1" checked={this.state.since} handler={this.handleRadio} />
+                <Radio label="24h" value="1" checked={this.state.since} handler={this.handleRadio} />
                 <Radio label="3 days" value="3" checked={this.state.since} handler={this.handleRadio} />
                 <Radio label="a week" value="7" checked={this.state.since} handler={this.handleRadio} />
                 <Radio label="a month" value="31" checked={this.state.since} handler={this.handleRadio} />
                 <Radio label="unlimited" value="0" checked={this.state.since} handler={this.handleRadio} />
                 <Radio label="custom" value="custom" checked={this.state.since} handler={this.handleRadio}>
-                  <DatePicker onChange={this.handleDate} selected={this.state.sinceDate}/>
+                  <DatePicker onChange={this.handleDate} selected={this.state.sinceDate} />
                 </Radio>
               </div>
               
             </div>
           </div>
 
-          <button className="btn btn-search"><i className="fa fa-search" aria-hidden="true"></i>&nbsp;Search</button>
+          <button className="btn btn-search"><Icon type="search" />&nbsp;Search</button>
         </form>
         
       </div>
@@ -172,11 +172,12 @@ var Checkbox = React.createClass({
 var Radio = React.createClass({
   render: function(){
     const name = "radio"+this.props.label.replace(" ", "");
+    const checked = (this.props.checked === this.props.value);
     //FIXME name should be the same?
     return (
       <label>
-        <input type="radio" name={name} id={name} value={this.props.value} checked={this.props.checked === this.props.value} onChange={this.props.handler} />
-        <span className="radio-inline radiobox" htmlFor={this.props.name}>{this.props.label}&nbsp;{this.props.children}</span>
+        <input type="radio" name={name} id={name} value={this.props.value} checked={checked} onChange={this.props.handler} />
+        <span className="radio-inline radiobox" htmlFor={this.props.name}>{this.props.label}<span className={checked? "":"hidden"}>{this.props.children}</span></span>
       </label>
     )
   }

@@ -21,6 +21,7 @@
 
 html {
     overflow-y: scroll;
+    font-size: 16px;
 }
 
 body {
@@ -183,8 +184,7 @@ th {
     border-radius: 4px;
     border: 1px solid #eee;
     padding: 0.5em;
-    margin: 0px;
-    margin-right: 1em;
+    margin: 0.5em;
     background-color: #fff !important;
     color: #535452 !important;
 }
@@ -193,8 +193,7 @@ th {
     border-radius: 4px;
     border: 1px solid #eee;
     padding: 0.5em;
-    margin: 0px;
-    margin-right: 1em;
+    margin: 0.5em;
     background-color: #fff !important;
     color: #535452 !important;
 }
@@ -246,6 +245,13 @@ label {
 
 #search-form-wrapper input[type=radio]:checked+.radiobox input {
     color: #535452 !important;
+    width: 6em;
+    text-align: center;
+    border-radius: 4px;
+    border: 1px solid #eee;
+    margin: 0;
+    margin-left: 0.5em;
+    height: 1.35em;
 }
 
 #search-form-wrapper input[type=checkbox]:checked+.PASSED {
@@ -271,7 +277,7 @@ label {
 #search-checkboxes {
     border: 1px solid #eee;
     border-radius: 4px;
-    padding: 0.5em;
+    !padding: 0.5em;
 }
 
 .token-removeable {
@@ -287,4 +293,13 @@ label {
 .close-button {
     margin-left: 0.3em;
     margin-right: 0.1em;
+}
+
+.react-datepicker {
+    font-family: "Overpass" !important;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+    background-color: #535452;
 }

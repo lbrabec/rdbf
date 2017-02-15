@@ -1,5 +1,6 @@
 var React = require('react');
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+var Icon = require("../components/icon").Icon;
 
 export var Results = React.createClass({
   render: function(){
@@ -28,7 +29,7 @@ export var Results = React.createClass({
         <table className="table-striped">
         <thead>
         <tr>
-            <th className="detail-data text-center"><i className="fa fa-info-circle fa-fw" aria-hidden="true"></i></th>
+            <th className="detail-data text-center"><Icon type="info-circle" /></th>
             <th className="detail-data">testcase</th>
             <th className="detail-data">item</th>
             <th className="detail-data">note</th>
@@ -63,15 +64,15 @@ var ResultInfo = React.createClass({
   render: function(){
     var icon = function(outcome){
       if (outcome == "PASSED") {
-        return (<i className="fa fa-check-circle fa-fw" aria-hidden="true"></i>)
+        return (<Icon type="check-circle" />)
       } else
       if (outcome == "FAILED"){
-        return (<i className="fa fa-times-circle fa-fw" aria-hidden="true"></i>)
+        return (<Icon type="times-circle" />)
       } else
       if (outcome == "NEEDS_INSPECTION"){
-        return (<i className="fa fa-question-circle fa-fw" aria-hidden="true"></i>)
+        return (<Icon type="question-circle" />)
       } else { //INFO
-        return (<i className="fa fa-info-circle fa-fw" aria-hidden="true"></i>)
+        return (<Icon type="info-circle" />)
       }
     }(this.props.result.outcome);
     return (
@@ -81,9 +82,11 @@ var ResultInfo = React.createClass({
           <td className="detail-data text-left">{this.props.result.data.item[0]}</td>
           <td className="detail-data text-left">{this.props.result.note}</td>
           <td className="detail-data text-right">{this.props.result.submit_time.split(".")[0].replace("T", "\n")}</td>
-          <td className="detail-data text-center"><a className="" role="button" data-toggle="collapse" href={"#collapse"+this.props.result.id} aria-expanded="false" aria-controls="collapseExample">
+          <td className="detail-data text-center">
+            <a className="" role="button" data-toggle="collapse" href={"#collapse"+this.props.result.id} aria-expanded="false" aria-controls="collapseExample">
               <i className="detail-toggle fa fa-chevron-circle-down fa-fw" aria-hidden="true"></i>
-          </a></td>
+            </a>
+          </td>
       </tr>
 
     )
