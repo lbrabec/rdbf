@@ -5,10 +5,11 @@ var Typeahead = require('react-bootstrap-typeahead').Typeahead;
 var queryString = require('query-string');
 var DatePicker = require('react-datepicker');
 var Icon = require("../components/icon").Icon;
+var Config = require("../config/config").Config;
 
 export var Search = React.createClass({
   getInitialState: function() {
-    fetchJsonp("https://taskotron.fedoraproject.org/resultsdb_api/api/v2.0/testcases?limit=1000")
+    fetchJsonp(Config.TESTCASES)
     .then(function(response) {
       return response.json()
     }).then(function(json) {

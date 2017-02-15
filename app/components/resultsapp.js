@@ -4,6 +4,7 @@ var queryString = require('query-string');
 var Navbar = require("../components/navbar").Navbar;
 var Search = require("../components/search").Search;
 var Results = require("../components/results").Results;
+var Config = require("../config/config").Config; 
 
 
 export var ResultsApp = React.createClass({
@@ -14,13 +15,13 @@ export var ResultsApp = React.createClass({
     //this.refresh();
     return {
       results: [],
-      urlBase: 'http://taskotron.fedoraproject.org/resultsdb_api/api/v2.0/results',
+      urlBase: Config.API_URL,
       urlQuery: "",
     };
   },
 
   goLive: function(){
-      this.timerID = setInterval(() => this.refresh(), 10000);
+      this.timerID = setInterval(() => this.refresh(), Config.REFRESH);
       $("#timer-id").text(this.timerID);
       $("#live-info").show();
   },
