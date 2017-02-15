@@ -116,7 +116,7 @@ export var Search = React.createClass({
       <div id="search-form-wrapper" className="text-left">
         <div id="search-form-header" className="text-left">&nbsp;&nbsp;<Icon type="search" />&nbsp;&nbsp;&nbsp;search</div>
         <form className="search-form" onSubmit={this.handleSearch}>
-          <input className="form-control" id="search-items" placeholder="items" name="items" value={this.state.items} onChange={this.handleText}/>
+          <input className="form-control" id="search-items" placeholder="items" name="items" value={this.state.items} onChange={this.handleText} type="text" />
           <br />
           <Typeahead options={this.state.tokens} minLength={1} multiple allowNew newSelectionPrefix="" placeholder="testcases" onChange={this.handleTestcases} selected={function(tcs){return tcs==""? [] : tcs.split(',')}(this.state.testcases)}/>
           <br />
