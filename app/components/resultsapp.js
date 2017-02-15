@@ -114,22 +114,28 @@ export var ResultsApp = React.createClass({
       if(url==""){
         url = this.state.urlBase+this.state.urlQuery;
       }
-
+      console.log(url);
       $("#spinner").show();
       fetchJsonp(url)
       .then(function(response) {
         return response.json()
       }).then(function(json) {
+        console.log(json);
         var newData = json.data.filter(function(result){return result.id < oldestID});
+        console.log(newData);
         if(newData.length != 0){
             //render
             this.setState({results: this.state.results.concat(newData)});
             $("#spinner").hide();
         } else {
             //throw away, go next
-            var next = json.next.replace(/[\?&]callback=[^\?]*/gi,""); //ugh
-            console.log(next);
-            this.loadMore(oldestID, next);
+            if(json.next == null){
+              alert("no moar data"); //FIXME change to something more elegant
+            } else {
+              var next = json.next.replace(/[\?&]callback=[^\?]*/gi,"").replace(/\?page/,"&page").replace(/results&page/,"results?page"); //temporary fix
+              console.log(next);
+              this.loadMore(oldestID, next);
+            }
         }
       }.bind(this))
       .catch(function(ex) {
