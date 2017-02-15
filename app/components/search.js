@@ -24,7 +24,7 @@ export var Search = React.createClass({
     if(!$.isEmptyObject(queryString.parse(location.search))){}
     return {
       items: ("item:like" in query)? query["item:like"].replace("%","*") : "", //FIXME!!
-      testcases: ("testcases:like" in query)? query["testcases:like"] : "",
+      testcases: ("testcases:like" in query)? query["testcases:like"].replace("%","*") : "",
       PASSED: ("outcome" in query)? query.outcome.includes('PASSED') : false,
       FAILED: ("outcome" in query)? query.outcome.includes('FAILED') : false,
       NEEDS_INSPECTION: ("outcome" in query)? query.outcome.includes('NEEDS_INSPECTION') : false,

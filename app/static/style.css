@@ -138,6 +138,11 @@ th {
     padding: 0.5em;
 }
 
+.detailed {
+    padding: 1em;
+    background-color: #fff;
+}
+
 table {
     width: 100%;
 }
@@ -241,6 +246,7 @@ label {
 #search-form-wrapper input[type=radio]:checked+.radiobox {
     color: #eee !important;
     background-color: #535452 !important;
+    transition: all 0.1s linear;
 }
 
 #search-form-wrapper input[type=radio]:checked+.radiobox input {
@@ -257,21 +263,25 @@ label {
 #search-form-wrapper input[type=checkbox]:checked+.PASSED {
     background-color: #639a81 !important;
     border-color: #639a81;
+    transition: all 0.1s linear;
 }
 
 #search-form-wrapper input[type=checkbox]:checked+.FAILED {
     background-color: #cc6168 !important;
     border-color: #cc6168;
+    transition: all 0.1s linear;
 }
 
 #search-form-wrapper input[type=checkbox]:checked+.NEEDS_INSPECTION {
     background-color: #cc8f60 !important;
     border-color: #cc8f60;
+    transition: all 0.1s linear;
 }
 
 #search-form-wrapper input[type=checkbox]:checked+.INFO {
     background-color: #63819a !important;
     border-color: #63819a;
+    transition: all 0.1s linear;
 }
 
 #search-checkboxes {
