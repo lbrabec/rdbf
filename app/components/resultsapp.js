@@ -132,6 +132,7 @@ export var ResultsApp = React.createClass({
             //throw away, go next
             if(json.next == null){
               alert("no moar data"); //FIXME change to something more elegant
+              $("#spinner").hide();
             } else {
               var next = json.next.replace(/[\?&]callback=[^\?]*/gi,"").replace(/\?page/,"&page").replace(/results&page/,"results?page"); //temporary fix
               console.log(next);
