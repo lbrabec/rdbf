@@ -16,10 +16,12 @@ export var Results = React.createClass({
       )
     });
 
-    var empty = (<tr></tr>);
+    var empty = function(id){return (<tr key={"emptyrow"+id}></tr>)};
 
     var listResultsCombined = []
-    listResults.forEach(function(e, i){listResultsCombined.push(e, listResultsDetails[i], empty)});
+    listResults.forEach(function(e, i){
+      listResultsCombined.push(e, listResultsDetails[i], empty(this.props.results[i].id))
+    }.bind(this));
     if(listResultsCombined.length == 0){
       listResultsCombined = [<ResultsEmpty key="empty"/>];
     }
