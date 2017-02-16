@@ -98,14 +98,14 @@ var ResultDetail = React.createClass({
     var data = this.props.result.data;
     data = Object.keys(this.props.result.data).map(function(key){
       return (
-        <div className="row">
+        <div className="row" key={"detail"+this.props.result.id+key}>
           <div className="col-md-3"><strong>{key}: </strong></div>
           <div className="col-md-9">{this.props.result.data[key]}</div>
         </div>
       )
     }.bind(this));
     var groups = this.props.result.groups.map(function(g){
-      return (<div>{g}</div>)
+      return (<div key={g}>{g}</div>)
     });
     var href = this.props.result.href;
     var ref_url = this.props.result.ref_url;

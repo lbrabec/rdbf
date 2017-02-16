@@ -15,6 +15,7 @@ export var ResultsApp = React.createClass({
     //this.refresh();
     return {
       results: [],
+      resultsBackground: [],
       urlBase: Config.API_URL,
       urlQuery: "",
     };
@@ -35,6 +36,10 @@ export var ResultsApp = React.createClass({
       }
   },
 
+  atTop: function(){
+    return $(window).scrollTop() == 0;
+  },
+
   componentDidMount: function(){
     if($.isEmptyObject(queryString.parse(location.search))) {
       this.refresh();
@@ -45,14 +50,14 @@ export var ResultsApp = React.createClass({
     //FIXME? this.timerID, closures and stuff?? hm
     $(window).scroll(function() {
        if($(window).scrollTop() != 0) {
-           this.endLive();
+           //this.endLive();
        } else {
-           this.goLive();
+           //this.goLive();
        }
     }.bind(this));
   },
   componentWillUnmount: function(){
-    this.endLive();
+    //this.endLive();
   },
 
   handleSearch: function(url){
@@ -64,7 +69,7 @@ export var ResultsApp = React.createClass({
 
   handeData: function(data){
     if(this.state.results.length > 0) {
-      var newestID = this.state.results[0].id;
+      var newestID = this.state.resultsBackground[0].id;
       console.log(newestID);
       console.log(data.filter(function(result){ return result.id > newestID}));
       return data.filter(function(result){ return result.id > newestID});
@@ -86,16 +91,27 @@ export var ResultsApp = React.createClass({
       var newData = this.handeData(json.data);
       if(this.state.results.length == 0){
           console.log("results were empty, setting the state");
-          this.setState({results: newData});
+          this.setState({results: newData, resultsBackground: newData});
       } else {
         if(newData.length == 0){
-          console.log("no new data");
-          this.setState({results: accumulator.concat(this.state.results)});
+          console.log("no new/more data");
+          this.setState((prevState, props) => {
+            var newResultsBackground = accumulator.concat(prevState.resultsBackground);
+            if(this.atTop()){
+              console.log("syncing results with resultsBackground");
+              return {
+                results: newResultsBackground,
+                resultsBackground: newResultsBackground
+              }
+            } else {
+              return {resultsBackground: newResultsBackground}
+            }
+          });
         } else {
           console.log(json.next);
-
-          //this.refresh(accumulator.concat(newData), json.next);
-          this.setState({results: newData.concat(this.state.results)});
+          var next = json.next.replace(/[\?&]callback=[^\?]*/gi,"").replace(/\?page/,"&page").replace(/results&page/,"results?page"); //temporary fix
+          this.refresh(accumulator.concat(newData), next);
+          // ^^^^
         }
       }
       $("#spinner").hide();
