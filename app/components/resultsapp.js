@@ -9,10 +9,6 @@ var Config = require("../config/config").Config;
 
 export var ResultsApp = React.createClass({
   getInitialState: function() {
-    //hm?
-    //this.loadMore = this.loadMore.bind(this);
-
-    //this.refresh();
     return {
       results: [],
       resultsBackground: [],
@@ -47,16 +43,11 @@ export var ResultsApp = React.createClass({
     this.goLive();
 
     //wrong place?
-    //FIXME? this.timerID, closures and stuff?? hm
     $(window).scroll(function() {
       if(this.atTop()) this.refresh();
-       if($(window).scrollTop() != 0) {
-           //this.endLive();
-       } else {
-           //this.goLive();
-       }
     }.bind(this));
   },
+  
   componentWillUnmount: function(){
     //this.endLive();
   },

@@ -1,4 +1,5 @@
 var React = require('react');
+var Icon = require('../components/icon').Icon;
 
 export var Navbar = React.createClass({
   render: function(){
@@ -15,7 +16,7 @@ export var Navbar = React.createClass({
                             <div id="spinner-wrapper">
                                 <i className="fa fa-refresh fa-spin fa-fw" id="spinner"></i>
                             </div>
-                            <span id="new-results-info" className="">new results</span>
+                            <span id="new-results-info" className=""><Icon type="arrow-up" />&nbsp;see new results</span>
                             <span className="hidden" id="timer-id"></span>
                         </span>
                     </a>
