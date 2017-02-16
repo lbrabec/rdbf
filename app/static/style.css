@@ -329,3 +329,19 @@ label {
 .fa-blink {
    animation: fa-blink 2s ease-out infinite;
 }
+
+#spinner-wrapper {
+    width: 2em;
+    display: inline-block;
+}
+
+#new-results-info {
+    display: none;
+    margin-left: 2em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    color: #535452;
+    background-color: #ccc;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}

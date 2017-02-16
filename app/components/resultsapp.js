@@ -49,6 +49,7 @@ export var ResultsApp = React.createClass({
     //wrong place?
     //FIXME? this.timerID, closures and stuff?? hm
     $(window).scroll(function() {
+      if(this.atTop()) this.refresh();
        if($(window).scrollTop() != 0) {
            //this.endLive();
        } else {
@@ -99,17 +100,21 @@ export var ResultsApp = React.createClass({
             var newResultsBackground = accumulator.concat(prevState.resultsBackground);
             if(this.atTop()){
               console.log("syncing results with resultsBackground");
+              $("#new-results-info").hide();
               return {
                 results: newResultsBackground,
                 resultsBackground: newResultsBackground
               }
             } else {
+              if(newResultsBackground.length != prevState.results.length)
+                $("#new-results-info").show();
               return {resultsBackground: newResultsBackground}
             }
           });
         } else {
-          console.log(json.next);
+          //FIXME handle null next page
           var next = json.next.replace(/[\?&]callback=[^\?]*/gi,"").replace(/\?page/,"&page").replace(/results&page/,"results?page"); //temporary fix
+          console.log(next);
           this.refresh(accumulator.concat(newData), next);
           // ^^^^
         }

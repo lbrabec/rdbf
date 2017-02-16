@@ -12,7 +12,10 @@ export var Navbar = React.createClass({
                         </span>
                         <span className="logo-text">ResultsDB Frontend &nbsp;&nbsp;
                             <span id="live-info"><i className="fa fa-circle fa-fw fa-blink red"></i>&nbsp;Live</span>
-                            <i className="fa fa-refresh fa-spin fa-fw" id="spinner"></i>
+                            <div id="spinner-wrapper">
+                                <i className="fa fa-refresh fa-spin fa-fw" id="spinner"></i>
+                            </div>
+                            <span id="new-results-info" className="">new results</span>
                             <span className="hidden" id="timer-id"></span>
                         </span>
                     </a>
