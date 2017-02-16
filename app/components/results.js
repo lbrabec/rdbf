@@ -15,7 +15,7 @@ export var Results = React.createClass({
 
     var listResultsDetails = this.props.results.map(function(result){
       return (
-        <ResultDetail result={result} key={"detail"+result.id} />
+        <ResultDetail result={result} key={"detail"+result.id} span="6"/>
       )
     });
 

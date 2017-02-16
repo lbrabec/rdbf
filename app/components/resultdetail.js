@@ -19,7 +19,7 @@ export var ResultDetail = React.createClass({
     var ref_url = this.props.result.ref_url;
     return (
         <tr>
-          <td colSpan="6">
+          <td colSpan={this.props.span}>
             <div className="collapse text-left" id={"collapse"+this.props.result.id}>
               <div className="detailed">
                 <div className="row">
